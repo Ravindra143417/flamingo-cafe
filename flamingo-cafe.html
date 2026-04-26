@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flamingo Cafe Le ɛstaminɛ — Sainikpuri, Hyderabad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Josefin+Sans:wght@300;400;500;600&family=Lora:ital,wght@0,400;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   VARIABLES & RESET
+═══════════════════════════════════════════ */
+:root{
+  --pink:#f0538a;--coral:#ff5f4b;--orange:#e8420a;
+  --blush:#ffc8d5;--deep:#140606;--warm:#3a0d10;
+  --cream:#fff6f2;--sand:#f6d5ca;--accent:#c93020;
+  --text:#280608;--muted:#8a4050;--card:#fffaf8;
+  --grad:linear-gradient(135deg,#f0538a 0%,#ff5f4b 55%,#e8420a 100%);
+  --grad-r:linear-gradient(315deg,#f0538a 0%,#ff5f4b 55%,#e8420a 100%);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Josefin Sans',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+
+/* ═══════════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════════ */
+.c-dot{width:8px;height:8px;background:var(--pink);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s}
+.c-ring{width:36px;height:36px;border:2px solid rgba(240,83,138,.5);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease,width .3s,height .3s,border-color .3s}
+body:has(a:hover) .c-ring,body:has(button:hover) .c-ring{width:52px;height:52px;border-color:var(--coral)}
+
+/* ═══════════════════════════════════════════
+   LOADING SCREEN
+═══════════════════════════════════════════ */
+#loader{position:fixed;inset:0;z-index:10000;background:var(--deep);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;transition:opacity .6s,visibility .6s}
+#loader.hidden{opacity:0;visibility:hidden}
+.loader-logo{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--cream);letter-spacing:.04em}
+.loader-logo span{font-family:'Lora',serif;font-style:italic;color:var(--pink);font-size:1rem;display:block;text-align:center;margin-top:.3rem;letter-spacing:.08em}
+.loader-bar{width:200px;height:2px;background:rgba(255,200,213,.15);border-radius:2px;overflow:hidden}
+.loader-fill{height:100%;background:var(--grad);border-radius:2px;animation:loaderFill 1.8s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes loaderFill{0%{width:0}100%{width:100%}}
+.loader-text{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,200,213,.4);font-weight:600}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+nav{position:fixed;top:0;width:100%;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 5%;transition:all .4s cubic-bezier(.4,0,.2,1)}
+nav.scrolled{background:rgba(255,246,242,.95);backdrop-filter:blur(20px);padding:.75rem 5%;box-shadow:0 4px 40px rgba(26,8,8,.08);border-bottom:1px solid rgba(240,83,138,.1)}
+.nav-logo{display:flex;flex-direction:column;text-decoration:none;line-height:1}
+.nav-logo-main{font-family:'Playfair Display',serif;font-size:1.32rem;font-weight:700;color:var(--warm);display:flex;align-items:center;gap:.35rem}
+.nav-logo-sub{font-family:'Lora',serif;font-size:.62rem;font-style:italic;color:var(--pink);letter-spacing:.1em;margin-top:.1rem}
+.nav-links{display:flex;gap:2.2rem;list-style:none}
+.nav-links a{font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;position:relative;transition:color .25s}
+.nav-links a::after{content:'';position:absolute;bottom:-5px;left:50%;width:0;height:2px;background:var(--grad);border-radius:2px;transition:all .3s;transform:translateX(-50%)}
+.nav-links a:hover{color:var(--coral)}
+.nav-links a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-wa{display:flex;align-items:center;gap:.5rem;background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.25);color:#1a7a40;padding:.45rem 1rem;border-radius:50px;font-size:.68rem;font-weight:600;letter-spacing:.04em;text-decoration:none;transition:all .25s}
+.nav-wa:hover{background:#25D366;color:#fff;border-color:#25D366}
+.nav-wa svg{width:14px;height:14px}
+.nav-cta{background:var(--grad);color:#fff;border:none;padding:.55rem 1.4rem;border-radius:50px;font-family:'Josefin Sans',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.08em;cursor:pointer;transition:all .25s;text-decoration:none;box-shadow:0 4px 20px rgba(255,95,75,.3)}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,95,75,.45)}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+#hero{min-height:100vh;display:grid;grid-template-columns:55% 45%;align-items:center;padding:6rem 5% 3rem;position:relative;overflow:hidden}
+
+/* animated mesh gradient bg */
+.hero-mesh{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-mesh::before{content:'';position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(240,83,138,.18) 0%,transparent 65%);top:-200px;right:-150px;animation:meshDrift 12s ease-in-out infinite alternate}
+.hero-mesh::after{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(232,66,10,.12) 0%,transparent 65%);bottom:-150px;left:-100px;animation:meshDrift 9s ease-in-out infinite alternate-reverse}
+@keyframes meshDrift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(40px,-40px) scale(1.1)}}
+
+/* floating orbs */
+.orb{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;animation:orbFloat ease-in-out infinite}
+.orb-1{width:300px;height:300px;background:rgba(240,83,138,.12);top:20%;left:30%;animation-duration:8s}
+.orb-2{width:200px;height:200px;background:rgba(255,95,75,.1);bottom:20%;right:25%;animation-duration:11s;animation-delay:-3s}
+.orb-3{width:150px;height:150px;background:rgba(232,66,10,.08);top:60%;left:10%;animation-duration:7s;animation-delay:-5s}
+@keyframes orbFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(1.05)}}
+
+/* noise texture */
+.hero-noise{position:absolute;inset:0;z-index:0;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");background-size:200px}
+
+.hero-left{position:relative;z-index:2}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1.8rem;animation:heroIn .9s cubic-bezier(.4,0,.2,1) both}
+.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--grad);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.6}}
+.eyebrow-text{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--coral);font-weight:600}
+
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(3.2rem,6vw,5.8rem);font-weight:700;line-height:1.02;color:var(--warm);animation:heroIn .9s .1s cubic-bezier(.4,0,.2,1) both}
+.hero-h1 em{font-style:italic;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.hero-sub-name{font-family:'Lora',serif;font-style:italic;font-size:clamp(1.15rem,2.2vw,1.9rem);color:var(--coral);display:block;margin-top:.4rem;margin-bottom:1.6rem;animation:heroIn .9s .2s cubic-bezier(.4,0,.2,1) both;opacity:.85}
+
+.hero-desc{font-size:.93rem;color:var(--muted);line-height:1.9;max-width:440px;font-weight:300;margin-bottom:2.5rem;animation:heroIn .9s .3s cubic-bezier(.4,0,.2,1) both}
+
+.hero-actions{display:flex;gap:1rem;align-items:center;animation:heroIn .9s .4s cubic-bezier(.4,0,.2,1) both}
+.btn-p{display:inline-flex;align-items:center;gap:.5rem;background:var(--grad);color:#fff;padding:.9rem 2rem;border-radius:50px;font-family:'Josefin Sans',sans-serif;font-weight:600;font-size:.8rem;letter-spacing:.06em;text-decoration:none;box-shadow:0 8px 28px rgba(255,95,75,.38);transition:all .3s;position:relative;overflow:hidden}
+.btn-p::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:background .3s}
+.btn-p:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(255,95,75,.5)}
+.btn-p:hover::after{background:rgba(255,255,255,.08)}
+.btn-g{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid rgba(240,83,138,.3);color:var(--warm);padding:.9rem 2rem;border-radius:50px;font-family:'Josefin Sans',sans-serif;font-weight:600;font-size:.8rem;letter-spacing:.06em;text-decoration:none;transition:all .3s;backdrop-filter:blur(8px)}
+.btn-g:hover{border-color:var(--pink);color:var(--pink);background:rgba(240,83,138,.06);transform:translateY(-2px)}
+
+.hero-stats{display:flex;gap:0;margin-top:3rem;animation:heroIn .9s .5s cubic-bezier(.4,0,.2,1) both}
+.hero-stat{padding:0 2rem 0 0;position:relative}
+.hero-stat+.hero-stat{padding-left:2rem;border-left:1px solid var(--sand)}
+.hs-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--warm);line-height:1;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hs-label{font-size:.6rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:.25rem}
+
+@keyframes heroIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* hero right visual */
+.hero-right{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;animation:fadeIn 1.4s .2s both}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.hero-visual-wrap{position:relative;width:clamp(300px,42vw,520px);height:clamp(300px,42vw,520px)}
+.hero-ring-outer{position:absolute;inset:-30px;border-radius:50%;border:1px solid rgba(240,83,138,.12);animation:spinSlow 25s linear infinite}
+.hero-ring-inner{position:absolute;inset:-15px;border-radius:50%;border:1px dashed rgba(255,95,75,.15);animation:spinSlow 18s linear infinite reverse}
+
+.hero-blob{width:100%;height:100%;border-radius:60% 40% 55% 45% / 45% 55% 45% 55%;background:linear-gradient(135deg,var(--blush) 0%,#ffb5c5 25%,var(--coral) 60%,var(--orange) 100%);display:flex;align-items:center;justify-content:center;font-size:clamp(5rem,9vw,9.5rem);animation:morph 9s ease-in-out infinite,floatY 6s ease-in-out infinite;box-shadow:0 40px 100px rgba(232,66,10,.28),0 0 0 1px rgba(240,83,138,.1)}
+
+@keyframes morph{0%,100%{border-radius:60% 40% 55% 45% / 45% 55% 45% 55%}33%{border-radius:48% 52% 42% 58% / 55% 45% 55% 45%}66%{border-radius:55% 45% 62% 38% / 40% 60% 40% 60%}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+
+/* floating cards */
+.float-card{position:absolute;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-radius:16px;padding:.9rem 1.2rem;box-shadow:0 12px 40px rgba(26,8,8,.14);display:flex;align-items:center;gap:.7rem;border:1px solid rgba(255,255,255,.8)}
+.fc-1{bottom:8%;right:-8%;animation:floatY 5s 1s ease-in-out infinite}
+.fc-2{top:12%;left:-8%;animation:floatY 7s ease-in-out infinite}
+.fc-icon{font-size:1.4rem;flex-shrink:0}
+.fc-text strong{display:block;font-size:.8rem;color:var(--warm);font-weight:600}
+.fc-text span{font-size:.68rem;color:var(--muted)}
+
+/* ═══════════════════════════════════════════
+   MARQUEE STRIP
+═══════════════════════════════════════════ */
+.marquee-strip{background:var(--deep);padding:.9rem 0;overflow:hidden;position:relative;z-index:1}
+.marquee-track{display:flex;gap:3rem;animation:marqueeRun 20s linear infinite;width:max-content}
+.marquee-item{display:flex;align-items:center;gap:.8rem;white-space:nowrap;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,200,213,.5);font-weight:600}
+.marquee-item span{color:var(--pink)}
+@keyframes marqueeRun{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ═══════════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════════ */
+#about{background:var(--deep);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;padding:7rem 5%;position:relative;overflow:hidden}
+.about-glow{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(240,83,138,.07) 0%,transparent 70%);top:-100px;right:-100px;pointer-events:none}
+.about-glow-2{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(232,66,10,.06) 0%,transparent 70%);bottom:-80px;left:-60px;pointer-events:none}
+
+.section-eyebrow{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;font-weight:600;margin-bottom:.9rem;display:block}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.12}
+.title-light{color:var(--cream)}
+.title-dark{color:var(--warm)}
+
+#about .section-eyebrow{color:var(--blush)}
+#about .about-p{color:rgba(255,246,242,.58);line-height:1.95;margin-top:1.3rem;font-size:.9rem;font-weight:300}
+
+.est-pill{display:inline-flex;align-items:center;gap:.5rem;background:rgba(240,83,138,.12);border:1px solid rgba(240,83,138,.2);border-radius:50px;padding:.4rem 1.1rem;margin-top:1.3rem;font-size:.67rem;color:var(--blush);letter-spacing:.12em;font-weight:600;text-transform:uppercase}
+
+.about-feats{display:flex;flex-direction:column;gap:.9rem;margin-top:2rem}
+.feat{display:flex;gap:1rem;align-items:flex-start;padding:1.1rem 1.4rem;border-radius:16px;background:rgba(255,200,213,.055);border:1px solid rgba(255,200,213,.1);transition:all .35s cubic-bezier(.4,0,.2,1);cursor:default}
+.feat:hover{background:rgba(255,200,213,.11);transform:translateX(8px);border-color:rgba(240,83,138,.25)}
+.feat-icon{font-size:1.35rem;flex-shrink:0;margin-top:.05rem}
+.feat-title{color:var(--blush);font-size:.84rem;font-weight:600;letter-spacing:.04em}
+.feat-desc{color:rgba(255,246,242,.48);font-size:.77rem;margin-top:.2rem;line-height:1.55;font-weight:300}
+
+.about-cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.a-card{border-radius:22px;padding:2rem 1.5rem;background:rgba(255,200,213,.055);border:1px solid rgba(255,200,213,.1);text-align:center;transition:all .35s cubic-bezier(.4,0,.2,1);cursor:default;position:relative;overflow:hidden}
+.a-card::before{content:'';position:absolute;inset:0;background:var(--grad);opacity:0;transition:opacity .35s}
+.a-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.a-card:hover::before{opacity:.07}
+.a-card:nth-child(2){margin-top:2.5rem}
+.a-card:nth-child(4){margin-top:-2.5rem}
+.a-big{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.a-desc{color:rgba(255,246,242,.42);font-size:.74rem;margin-top:.4rem;line-height:1.4;position:relative;z-index:1}
+
+/* ═══════════════════════════════════════════
+   MENU
+═══════════════════════════════════════════ */
+#menu{background:var(--cream);padding:7rem 5%}
+.menu-top{text-align:center;margin-bottom:3.5rem}
+.menu-top .section-eyebrow{color:var(--coral)}
+.menu-top p{color:var(--muted);margin-top:.8rem;font-size:.9rem;font-weight:300}
+
+.menu-tabs{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;margin-bottom:3rem}
+.tab{padding:.52rem 1.4rem;border-radius:50px;border:1.5px solid var(--sand);background:transparent;color:var(--muted);font-family:'Josefin Sans',sans-serif;font-size:.69rem;font-weight:600;letter-spacing:.08em;cursor:pointer;transition:all .28s cubic-bezier(.4,0,.2,1)}
+.tab:hover{border-color:rgba(240,83,138,.4);color:var(--coral)}
+.tab.active{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 6px 20px rgba(255,95,75,.32)}
+
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(278px,1fr));gap:1.5rem}
+.menu-item{background:var(--card);border-radius:22px;padding:1.7rem;border:1px solid var(--sand);transition:transform .32s cubic-bezier(.4,0,.2,1),box-shadow .32s;display:none;position:relative;overflow:hidden}
+.menu-item.visible{display:block;animation:cardIn .55s cubic-bezier(.4,0,.2,1) both}
+@keyframes cardIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.menu-item::after{content:'';position:absolute;inset:0;background:var(--grad);opacity:0;transition:opacity .32s}
+.menu-item:hover{transform:translateY(-8px);box-shadow:0 24px 60px rgba(26,8,8,.12)}
+.menu-item:hover::after{opacity:.03}
+
+/* cold brew hero card */
+.cb-hero{grid-column:1/-1;background:var(--deep);border-color:rgba(240,83,138,.3);box-shadow:0 0 0 1px rgba(240,83,138,.15)}
+.cb-hero:hover{box-shadow:0 24px 60px rgba(0,0,0,.3)}
+.cb-hero::after{opacity:0}
+.cb-inner{display:flex;align-items:center;gap:3rem;flex-wrap:wrap}
+.cb-left{flex:1;min-width:200px}
+.cb-emoji{font-size:3.5rem;display:block;margin-bottom:1rem}
+.cb-name{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--cream)}
+.cb-desc{font-size:.87rem;color:rgba(255,200,213,.6);line-height:1.8;margin:.6rem 0 1.2rem;font-weight:300;max-width:440px}
+.cb-right{display:flex;flex-direction:column;gap:.8rem;align-items:flex-end}
+.cb-badge{background:var(--grad);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.12em;padding:.5rem 1.2rem;border-radius:50px;text-transform:uppercase;white-space:nowrap}
+.cb-sub-badges{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:flex-end}
+.cb-sub{font-size:.65rem;border:1px solid rgba(240,83,138,.25);color:rgba(255,200,213,.65);padding:.3rem .8rem;border-radius:50px;letter-spacing:.06em}
+
+.item-emoji{font-size:2rem;margin-bottom:.8rem;display:block;transition:transform .3s}
+.menu-item:hover .item-emoji{transform:scale(1.15) rotate(5deg)}
+.item-name{font-family:'Playfair Display',serif;font-size:1.16rem;color:var(--warm);font-weight:600;position:relative;z-index:1}
+.item-desc{font-size:.79rem;color:var(--muted);margin:.45rem 0 .9rem;line-height:1.65;font-weight:300;position:relative;z-index:1}
+.item-foot{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;position:relative;z-index:1}
+.badge{font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:.28rem .75rem;border-radius:50px;font-weight:600;font-family:'Josefin Sans',sans-serif}
+.b-hot{background:#fde8e0;color:#c93020}
+.b-new{background:#e0f5e8;color:#1e6e3a}
+.b-cold{background:#ddeeff;color:#1a4a8a}
+.b-veg{background:#e8f5e0;color:#2d6e1a}
+.b-sig{background:linear-gradient(135deg,rgba(240,83,138,.15),rgba(255,95,75,.12));color:var(--coral)}
+
+/* specials */
+.menu-specials{background:var(--grad);border-radius:26px;padding:3.2rem 3.5rem;margin-top:4rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;position:relative;overflow:hidden}
+.menu-specials::before{content:'🦩';position:absolute;right:2%;top:50%;transform:translateY(-50%);font-size:10rem;opacity:.08;pointer-events:none;animation:floatY 6s ease-in-out infinite}
+.ms-text h3{font-family:'Playfair Display',serif;font-size:2rem;color:#fff;font-weight:700}
+.ms-text p{color:rgba(255,255,255,.78);font-size:.88rem;margin-top:.5rem;font-weight:300}
+.btn-w{background:#fff;color:var(--accent);padding:.9rem 2.1rem;border-radius:50px;font-family:'Josefin Sans',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.06em;text-decoration:none;box-shadow:0 8px 28px rgba(0,0,0,.15);transition:all .28s;white-space:nowrap}
+.btn-w:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.2)}
+
+/* ═══════════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════════ */
+#testimonials{background:var(--deep);padding:7rem 5%;position:relative;overflow:hidden}
+.testi-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 10% 50%,rgba(240,83,138,.06),transparent),radial-gradient(ellipse 50% 60% at 90% 60%,rgba(232,66,10,.06),transparent);pointer-events:none}
+.testi-top{text-align:center;margin-bottom:3.5rem}
+.testi-top .section-eyebrow{color:var(--blush)}
+.testi-top .section-title{color:var(--cream)}
+.testi-top p{color:rgba(255,200,213,.4);margin-top:.8rem;font-size:.88rem;font-weight:300}
+
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.testi{background:rgba(255,200,213,.05);border:1px solid rgba(255,200,213,.1);border-radius:24px;padding:2.1rem;position:relative;overflow:hidden;transition:all .35s cubic-bezier(.4,0,.2,1)}
+.testi::before{content:open-quote;font-family:'Playfair Display',serif;font-size:6rem;color:rgba(240,83,138,.1);position:absolute;top:-.5rem;right:1.2rem;line-height:1;pointer-events:none}
+.testi:hover{background:rgba(255,200,213,.09);transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.25);border-color:rgba(240,83,138,.2)}
+.testi-stars{font-size:.9rem;letter-spacing:.1em;margin-bottom:1.1rem}
+.testi-stars span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.testi blockquote{font-family:'Lora',serif;font-size:.91rem;font-style:italic;color:rgba(255,246,242,.82);line-height:1.82;position:relative;z-index:1}
+.testi-foot{display:flex;align-items:center;gap:.9rem;margin-top:1.6rem;position:relative;z-index:1}
+.testi-av{width:44px;height:44px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;box-shadow:0 4px 14px rgba(255,95,75,.3)}
+.testi-name{color:var(--blush);font-size:.84rem;font-weight:600;letter-spacing:.03em}
+.testi-role{color:rgba(255,200,213,.38);font-size:.7rem;margin-top:.15rem}
+
+/* ═══════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════ */
+#contact{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;padding:7rem 5%;background:var(--cream)}
+.contact-left .section-eyebrow{color:var(--coral)}
+.contact-left .section-title{margin-bottom:1rem}
+.contact-left>p{color:var(--muted);line-height:1.85;font-size:.9rem;font-weight:300}
+
+.contact-cards{margin-top:2rem;display:flex;flex-direction:column;gap:.85rem}
+.cc{display:flex;align-items:flex-start;gap:1rem;padding:1.15rem 1.4rem;border-radius:16px;background:var(--card);border:1px solid var(--sand);transition:all .3s cubic-bezier(.4,0,.2,1)}
+.cc:hover{border-color:rgba(240,83,138,.3);box-shadow:0 6px 24px rgba(240,83,138,.1);transform:translateX(6px)}
+.cc-icon{font-size:1.3rem;flex-shrink:0;margin-top:.1rem}
+.cc strong{color:var(--warm);display:block;font-size:.88rem;font-weight:600;margin-bottom:.2rem}
+.cc p{font-size:.81rem;color:var(--muted);line-height:1.6;font-weight:300}
+
+.map-wrap{border-radius:20px;overflow:hidden;margin-top:1.6rem;border:2px solid var(--sand);height:210px;box-shadow:0 8px 30px rgba(26,8,8,.07)}
+.map-wrap iframe{width:100%;height:100%;border:none}
+.map-cta{display:inline-flex;align-items:center;gap:.4rem;margin-top:.8rem;font-size:.76rem;color:var(--coral);font-weight:600;text-decoration:none;transition:gap .2s}
+.map-cta:hover{gap:.7rem}
+
+.wa-btn{display:inline-flex;align-items:center;gap:.8rem;background:#25D366;color:#fff;padding:1rem 1.9rem;border-radius:50px;text-decoration:none;font-family:'Josefin Sans',sans-serif;font-weight:600;font-size:.83rem;letter-spacing:.05em;margin-top:1.5rem;box-shadow:0 8px 28px rgba(37,211,102,.3);transition:all .28s}
+.wa-btn:hover{background:#1db954;transform:translateY(-3px);box-shadow:0 16px 36px rgba(37,211,102,.4)}
+.wa-btn svg{width:20px;height:20px;flex-shrink:0}
+
+/* form */
+.form-box{background:var(--card);border-radius:26px;padding:2.6rem;border:1px solid var(--sand);box-shadow:0 12px 50px rgba(26,8,8,.06)}
+.form-title{font-family:'Playfair Display',serif;font-size:1.85rem;color:var(--warm);font-weight:700;margin-bottom:.35rem}
+.form-sub{font-size:.82rem;color:var(--muted);margin-bottom:1.6rem;font-weight:300}
+.form{display:flex;flex-direction:column;gap:.95rem}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:.95rem}
+.f-group{display:flex;flex-direction:column;gap:.4rem}
+.f-group label{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.f-group input,.f-group textarea,.f-group select{background:#fff;border:1.5px solid var(--sand);border-radius:12px;padding:.85rem 1rem;font-family:'Josefin Sans',sans-serif;font-size:.88rem;color:var(--text);outline:none;resize:none;transition:all .25s}
+.f-group input:focus,.f-group textarea:focus,.f-group select:focus{border-color:var(--pink);box-shadow:0 0 0 4px rgba(240,83,138,.09)}
+.f-group textarea{height:108px}
+.submit{background:var(--grad);color:#fff;border:none;padding:1.05rem 2rem;border-radius:50px;font-family:'Josefin Sans',sans-serif;font-size:.84rem;font-weight:700;letter-spacing:.07em;cursor:pointer;transition:all .28s;box-shadow:0 8px 28px rgba(255,95,75,.32);display:inline-flex;align-items:center;gap:.5rem;justify-content:center}
+.submit:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(255,95,75,.45)}
+.success{display:none;background:linear-gradient(135deg,#e8f8ee,#f0ffe8);border:1px solid #a8d5b0;color:#1e6e3a;padding:1rem 1.3rem;border-radius:12px;font-size:.87rem;font-weight:500}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer{background:var(--deep);position:relative;overflow:hidden}
+.footer-top-shine{height:3px;background:var(--grad);position:relative;overflow:hidden}
+.footer-top-shine::after{content:'';position:absolute;left:-100%;top:0;height:100%;width:60%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent);animation:shine 2.8s linear infinite}
+@keyframes shine{to{left:200%}}
+
+.footer-glow{position:absolute;inset:0;background:radial-gradient(ellipse 70% 40% at 50% -5%,rgba(240,83,138,.07),transparent 55%);pointer-events:none}
+
+.footer-body{position:relative;z-index:1;padding:4.5rem 5% 2rem}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3.5rem;padding-bottom:3.5rem;border-bottom:1px solid rgba(255,200,213,.07);margin-bottom:2.5rem}
+
+/* brand */
+.f-brand-logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--blush);display:block;margin-bottom:.25rem}
+.f-brand-sub{font-family:'Lora',serif;font-style:italic;font-size:.7rem;color:var(--pink);display:block;margin-bottom:1rem;letter-spacing:.08em}
+.f-brand-p{color:rgba(255,246,242,.38);font-size:.81rem;line-height:1.75;font-weight:300;max-width:220px}
+.f-est{display:inline-flex;align-items:center;gap:.45rem;background:rgba(240,83,138,.1);border:1px solid rgba(240,83,138,.18);border-radius:50px;padding:.32rem .9rem;margin-top:.9rem;font-size:.62rem;color:var(--blush);letter-spacing:.12em;font-weight:600;text-transform:uppercase}
+
+/* cols */
+.f-col h5{color:var(--blush);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;margin-bottom:1.3rem;font-weight:700;position:relative;padding-bottom:.65rem}
+.f-col h5::after{content:'';position:absolute;bottom:0;left:0;width:20px;height:2px;background:var(--grad);border-radius:2px}
+.f-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.f-col a{color:rgba(255,246,242,.42);font-size:.8rem;text-decoration:none;transition:all .25s;display:inline-flex;align-items:center;gap:.45rem;font-weight:300}
+.f-col a .dot{width:4px;height:4px;border-radius:50%;background:var(--coral);opacity:0;transition:opacity .25s;flex-shrink:0}
+.f-col a:hover{color:var(--pink);transform:translateX(6px)}
+.f-col a:hover .dot{opacity:1}
+
+.f-hour{display:flex;justify-content:space-between;gap:1rem;font-size:.78rem;margin-bottom:.5rem;font-weight:300}
+.f-hour .d{color:rgba(255,246,242,.42)}
+.f-hour .t{color:rgba(255,200,213,.62)}
+
+.f-contact-item{display:flex;align-items:flex-start;gap:.6rem;font-size:.79rem;color:rgba(255,246,242,.4);margin-bottom:.7rem;line-height:1.55;font-weight:300}
+.f-contact-item .ic{flex-shrink:0;font-size:.95rem}
+.f-contact-item a{color:rgba(255,200,213,.6);text-decoration:none;transition:color .2s}
+.f-contact-item a:hover{color:var(--pink)}
+
+/* footer bottom */
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.2rem}
+.footer-bottom p{color:rgba(255,246,242,.22);font-size:.73rem}
+.footer-bottom p span{color:var(--pink)}
+.socials{display:flex;gap:.6rem}
+.soc{width:40px;height:40px;border-radius:12px;border:1px solid rgba(255,200,213,.1);display:flex;align-items:center;justify-content:center;color:rgba(255,246,242,.42);font-size:.76rem;font-weight:700;text-decoration:none;transition:all .3s;letter-spacing:0;font-family:'Josefin Sans',sans-serif;position:relative;overflow:hidden}
+.soc::before{content:'';position:absolute;inset:0;background:var(--grad);opacity:0;transition:opacity .3s}
+.soc:hover{border-color:transparent;color:#fff;transform:translateY(-4px);box-shadow:0 10px 24px rgba(255,95,75,.35)}
+.soc:hover::before{opacity:1}
+.soc span{position:relative;z-index:1}
+
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════════ */
+[data-reveal]{opacity:0;transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1)}
+[data-reveal="up"]{transform:translateY(40px)}
+[data-reveal="left"]{transform:translateX(-40px)}
+[data-reveal="right"]{transform:translateX(40px)}
+[data-reveal="scale"]{transform:scale(.94)}
+[data-reveal].in{opacity:1;transform:none}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media(max-width:960px){
+  #hero{grid-template-columns:1fr;text-align:center;gap:3rem}
+  .hero-desc,.hero-stats,.hero-actions,.hero-eyebrow{justify-content:center}
+  .hero-desc{margin-left:auto;margin-right:auto}
+  .hero-actions{flex-wrap:wrap;justify-content:center}
+  .hero-stats{flex-wrap:wrap;justify-content:center}
+  #about{grid-template-columns:1fr;gap:3rem}
+  .about-cards{grid-template-columns:repeat(4,1fr)}
+  .a-card:nth-child(2),.a-card:nth-child(4){margin:0}
+  #contact{grid-template-columns:1fr;gap:3rem}
+  .f-row{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
+  .testi-grid{grid-template-columns:1fr}
+  .fc-2{display:none}
+}
+@media(max-width:600px){
+  .footer-grid{grid-template-columns:1fr}
+  .hero-visual-wrap{width:240px;height:240px}
+  .fc-1{display:none}
+  .cb-inner{flex-direction:column;gap:1.5rem}
+  .cb-right{align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">🦩 Flamingo Cafe<span>Le ɛstaminɛ</span></div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div class="loader-text">Brewing something special…</div>
+</div>
+
+<!-- CUSTOM CURSOR -->
+<div class="c-dot" id="cDot"></div>
+<div class="c-ring" id="cRing"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="#hero">
+    <span class="nav-logo-main">🦩 Flamingo Cafe</span>
+    <span class="nav-logo-sub">Le ɛstaminɛ</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a class="nav-wa" href="https://wa.me/918686650068" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+    <a class="nav-cta" href="#contact">Reserve Table</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-mesh"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="hero-noise"></div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <span class="eyebrow-dot"></span>
+      <span class="eyebrow-text">Est. 29 December 2021 · Sainikpuri, Hyderabad</span>
+    </div>
+    <h1 class="hero-h1">Where Every<br><em>Sip</em> Tells<br>a Story</h1>
+    <span class="hero-sub-name">Le ɛstaminɛ</span>
+    <p class="hero-desc">A sanctuary of flavour and calm nestled in the green heart of Sainikpuri. Every cup crafted with passion, every bite made with love — your perfect escape from the ordinary.</p>
+    <div class="hero-actions">
+      <a class="btn-p" href="#menu">Explore Menu <span>→</span></a>
+      <a class="btn-g" href="#contact">Book a Table</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hs-num">4.1★</div>
+        <div class="hs-label">Google Rating</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hs-num">12k+</div>
+        <div class="hs-label">Happy Guests</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hs-num">60+</div>
+        <div class="hs-label">Menu Items</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-visual-wrap">
+      <div class="hero-ring-outer"></div>
+      <div class="hero-ring-inner"></div>
+      <div class="hero-blob">🦩</div>
+      <div class="float-card fc-1">
+        <div class="fc-icon">❄️</div>
+        <div class="fc-text">
+          <strong>Cold Brew</strong>
+          <span>Hyderabad's #1</span>
+        </div>
+      </div>
+      <div class="float-card fc-2">
+        <div class="fc-icon">🌿</div>
+        <div class="fc-text">
+          <strong>Outdoor Seating</strong>
+          <span>30–40 guests</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track" id="marquee">
+    <div class="marquee-item"><span>☕</span> Specialty Coffee</div>
+    <div class="marquee-item"><span>❄️</span> Famous Cold Brew</div>
+    <div class="marquee-item"><span>🌿</span> Outdoor Oasis</div>
+    <div class="marquee-item"><span>🍴</span> Veg &amp; Non-Veg</div>
+    <div class="marquee-item"><span>📍</span> Sainikpuri, Hyderabad</div>
+    <div class="marquee-item"><span>🕐</span> Open Daily 9AM–11PM</div>
+    <div class="marquee-item"><span>🦩</span> Est. 29 Dec 2021</div>
+    <div class="marquee-item"><span>👨‍🍳</span> 6 Expert Baristas</div>
+    <!-- duplicate for seamless -->
+    <div class="marquee-item"><span>☕</span> Specialty Coffee</div>
+    <div class="marquee-item"><span>❄️</span> Famous Cold Brew</div>
+    <div class="marquee-item"><span>🌿</span> Outdoor Oasis</div>
+    <div class="marquee-item"><span>🍴</span> Veg &amp; Non-Veg</div>
+    <div class="marquee-item"><span>📍</span> Sainikpuri, Hyderabad</div>
+    <div class="marquee-item"><span>🕐</span> Open Daily 9AM–11PM</div>
+    <div class="marquee-item"><span>🦩</span> Est. 29 Dec 2021</div>
+    <div class="marquee-item"><span>👨‍🍳</span> 6 Expert Baristas</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-glow"></div>
+  <div class="about-glow-2"></div>
+  <div data-reveal="left">
+    <span class="section-eyebrow">Our Story</span>
+    <h2 class="section-title title-light">A Café Born<br>from Passion</h2>
+    <p class="about-p">Flamingo Cafe Le ɛstaminɛ opened its doors on <strong style="color:var(--blush)">29 December 2021</strong> with one dream — to craft a peaceful outdoor space where conversations bloom, flavours surprise, and every guest feels at home. Nestled in the green heart of Sainikpuri, we've grown into one of Hyderabad's most loved neighbourhood cafés.</p>
+    <span class="est-pill">🗓️ Est. 29 December 2021</span>
+    <div class="about-feats">
+      <div class="feat" data-reveal="left" style="transition-delay:.1s">
+        <div class="feat-icon">🌿</div>
+        <div>
+          <div class="feat-title">Outdoor Oasis</div>
+          <div class="feat-desc">Completely al fresco seating for 30–40 guests surrounded by lush greenery and fresh air.</div>
+        </div>
+      </div>
+      <div class="feat" data-reveal="left" style="transition-delay:.2s">
+        <div class="feat-icon">☕</div>
+        <div>
+          <div class="feat-title">Specialty Coffee</div>
+          <div class="feat-desc">Cold brews, signature lattes, and creative espresso drinks crafted by our 6 skilled baristas.</div>
+        </div>
+      </div>
+      <div class="feat" data-reveal="left" style="transition-delay:.3s">
+        <div class="feat-icon">🍴</div>
+        <div>
+          <div class="feat-title">Veg &amp; Non-Veg</div>
+          <div class="feat-desc">Extensive menu catering to all palates — fresh, flavourful, made to order every time.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="about-cards" data-reveal="right">
+    <div class="a-card">
+      <div class="a-big">3+</div>
+      <div class="a-desc">Years crafting perfect cups</div>
+    </div>
+    <div class="a-card">
+      <div class="a-big">6</div>
+      <div class="a-desc">Skilled baristas on team</div>
+    </div>
+    <div class="a-card">
+      <div class="a-big">40</div>
+      <div class="a-desc">Outdoor seats in greenery</div>
+    </div>
+    <div class="a-card">
+      <div class="a-big">∞</div>
+      <div class="a-desc">Smiles served daily</div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="menu-top" data-reveal="up">
+    <span class="section-eyebrow">What We Serve</span>
+    <h2 class="section-title title-dark">Our Menu</h2>
+    <p>Handcrafted with love · Veg &amp; Non-Veg options · Served fresh daily</p>
+  </div>
+
+  <div class="menu-tabs" data-reveal="up" style="transition-delay:.1s">
+    <button class="tab active" onclick="filterMenu('all',this)">All</button>
+    <button class="tab" onclick="filterMenu('coffee',this)">Coffee</button>
+    <button class="tab" onclick="filterMenu('coldbrew',this)">Cold Brew ❄️</button>
+    <button class="tab" onclick="filterMenu('shakes',this)">Shakes &amp; Drinks</button>
+    <button class="tab" onclick="filterMenu('food',this)">Food</button>
+  </div>
+
+  <div class="menu-grid">
+
+    <!-- COLD BREW HERO CARD -->
+    <div class="menu-item cb-hero visible" data-cat="coldbrew">
+      <div class="cb-inner">
+        <div class="cb-left">
+          <span class="cb-emoji">❄️</span>
+          <div class="cb-name">Classic Cold Brew</div>
+          <p class="cb-desc">Steeped for 18 hours, smooth and bold with zero bitterness. Our #1 bestselling drink — the one Flamingo is known for across all of Hyderabad. Once you try it, you'll be back for more. Rich, clean, endlessly refreshing.</p>
+          <div class="item-foot">
+            <span class="badge b-cold">18-Hour Steep</span>
+            <span class="badge b-sig">#1 Bestseller</span>
+            <span class="badge b-cold">Zero Bitterness</span>
+          </div>
+        </div>
+        <div class="cb-right">
+          <span class="cb-badge">⭐ Flamingo's Signature</span>
+          <div class="cb-sub-badges">
+            <span class="cb-sub">Cold</span>
+            <span class="cb-sub">Must Try</span>
+            <span class="cb-sub">Hyderabad Fav</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COFFEE -->
+    <div class="menu-item visible" data-cat="coffee">
+      <span class="item-emoji">☕</span>
+      <div class="item-name">Cappuccino</div>
+      <div class="item-desc">Classic espresso topped with equal parts steamed milk and velvety foam — a timeless favourite</div>
+      <div class="item-foot"><span class="badge b-hot">Hot</span></div>
+    </div>
+    <div class="menu-item visible" data-cat="coffee">
+      <span class="item-emoji">🥛</span>
+      <div class="item-name">Café Latte</div>
+      <div class="item-desc">Smooth espresso with silky steamed milk and a delicate light foam top</div>
+      <div class="item-foot"><span class="badge b-hot">Hot</span></div>
+    </div>
+    <div class="menu-item visible" data-cat="coffee">
+      <span class="item-emoji">☕</span>
+      <div class="item-name">Americano</div>
+      <div class="item-desc">Espresso shots diluted with hot water — rich, bold and beautifully clean</div>
+      <div class="item-foot"><span class="badge b-hot">Hot</span></div>
+    </div>
+    <div class="menu-item visible" data-cat="coffee">
+      <span class="item-emoji">🌟</span>
+      <div class="item-name">Golden Foam Coffee</div>
+      <div class="item-desc">Espresso with a signature golden creamy foam — smooth, dessert-like, reminiscent of tiramisu pudding. Rich, slightly sweet, perfectly balanced. Josh's top pick!</div>
+      <div class="item-foot"><span class="badge b-new">New ✦</span><span class="badge b-sig">Josh's Pick</span></div>
+    </div>
+    <div class="menu-item visible" data-cat="coffee">
+      <span class="item-emoji">🍫</span>
+      <div class="item-name">Mocha</div>
+      <div class="item-desc">Espresso, rich dark chocolate sauce and steamed milk — chocolate lovers rejoice</div>
+      <div class="item-foot"><span class="badge b-hot">Hot</span></div>
+    </div>
+    <div class="menu-item visible" data-cat="coffee">
+      <span class="item-emoji">🌸</span>
+      <div class="item-name">Flamingo Signature Latte</div>
+      <div class="item-desc">Our house special — beautifully layered latte with house-made syrups and artistic foam art</div>
+      <div class="item-foot"><span class="badge b-sig">Signature</span></div>
+    </div>
+    <div class="menu-item visible" data-cat="coffee">
+      <span class="item-emoji">🧋</span>
+      <div class="item-name">Iced Latte</div>
+      <div class="item-desc">Espresso over ice with chilled milk — refreshing, smooth and endlessly satisfying</div>
+      <div class="item-foot"><span class="badge b-cold">Iced</span></div>
+    </div>
+    <div class="menu-item visible" data-cat="coffee">
+      <span class="item-emoji">🍵</span>
+      <div class="item-name">Matcha Latte</div>
+      <div class="item-desc">Ceremonial-grade matcha whisked with steamed milk — earthy, creamy, calming</div>
+      <div class="item-foot"><span class="badge b-new">New</span></div>
+    </div>
+
+    <!-- COLD BREW -->
+    <div class="menu-item visible" data-cat="coldbrew">
+      <span class="item-emoji">🍦</span>
+      <div class="item-name">Cold Brew Float</div>
+      <div class="item-desc">Our signature cold brew poured over vanilla ice cream — creamy, bold, utterly addictive</div>
+      <div class="item-foot"><span class="badge b-cold">Cold</span><span class="badge b-sig">Fan Fav</span></div>
+    </div>
+    <div class="menu-item visible" data-cat="coldbrew">
+      <span class="item-emoji">🥛</span>
+      <div class="item-name">Cold Brew Latte</div>
+      <div class="item-desc">Smooth cold brew paired with chilled milk over ice — the perfect everyday refresher</div>
+      <div class="item-foot"><span class="badge b-cold">Cold</span></div>
+    </div>
+    <div class="menu-item visible" data-cat="coldbrew">
+      <span class="item-emoji">🍮</span>
+      <div class="item-name">Cold Brew Tonic</div>
+      <div class="item-desc">Cold brew meets sparkling tonic water with a citrus twist — unexpectedly brilliant</div>
+      <div class="item-foot"><span class="badge b-new">New</span><span class="badge b-cold">Sparkling</span></div>
+    </div>
+
+    <!-- SHAKES & DRINKS (no smoothies, no hibiscus) -->
+    <div class="menu-item visible" data-cat="shakes">
+      <span class="item-emoji">🥤</span>
+      <div class="item-name">Chocolate Shake</div>
+      <div class="item-desc">Thick, indulgent chocolate milkshake blended with premium cocoa and creamy ice cream</div>
+      <div class="item-foot"><span class="badge b-cold">Cold</span></div>
+    </div>
+    <div class="menu-item visible" data-cat="shakes">
+      <span class="item-emoji">🍓</span>
+      <div class="item-name">Strawberry Shake</div>
+      <div class="item-desc">Fresh strawberry blended with creamy ice cream — sweet, fruity and refreshing</div>
+      <div class="item-foot"><span class="badge b-cold">Cold</span></div>
+    </div>
+    <div class="menu-item visible" data-cat="shakes">
+      <span class="item-emoji">🍋</span>
+      <div class="item-name">Lemonade Cooler</div>
+      <div class="item-desc">Freshly squeezed lemon with mint and sparkling water — clean, bright, refreshing</div>
+      <div class="item-foot"><span class="badge b-cold">Cold</span><span class="badge b-veg">Veg</span></div>
+    </div>
+
+    <!-- FOOD (no pizza toast, no waffles, no egg benedict) -->
+    <div class="menu-item visible" data-cat="food">
+      <span class="item-emoji">🥪</span>
+      <div class="item-name">Grilled Sandwich</div>
+      <div class="item-desc">Toasted bread with fresh veggies, cheese and house sauces — veg &amp; non-veg options available</div>
+      <div class="item-foot"><span class="badge b-veg">Veg / Non-Veg</span></div>
+    </div>
+    <div class="menu-item visible" data-cat="food">
+      <span class="item-emoji">🥗</span>
+      <div class="item-name">Fresh Garden Salad</div>
+      <div class="item-desc">Crisp seasonal greens with house dressing, cherry tomatoes and crunchy croutons</div>
+      <div class="item-foot"><span class="badge b-veg">Veg</span></div>
+    </div>
+    <div class="menu-item visible" data-cat="food">
+      <span class="item-emoji">🍗</span>
+      <div class="item-name">Chicken Wrap</div>
+      <div class="item-desc">Grilled chicken, fresh lettuce, tomato and our secret sauce in a soft warm tortilla</div>
+      <div class="item-foot"><span class="badge b-hot">Non-Veg</span></div>
+    </div>
+  </div>
+
+  <div class="menu-specials" data-reveal="scale">
+    <div class="ms-text">
+      <h3>❄️ Try Our Famous Cold Brew</h3>
+      <p>18-hour steeped, zero bitterness, all flavour. Hyderabad's favourite cold brew — only at Flamingo Cafe Le ɛstaminɛ</p>
+    </div>
+    <a class="btn-w" href="https://wa.me/918686650068?text=Hi%20Flamingo%20Cafe!%20I'd%20like%20to%20order%20the%20Cold%20Brew." target="_blank">Order on WhatsApp →</a>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testi-bg"></div>
+  <div class="testi-top" data-reveal="up">
+    <span class="section-eyebrow">Google Reviews</span>
+    <h2 class="section-title title-light">What Our Guests Say</h2>
+    <p>Real words from real people who visited Flamingo Cafe Le ɛstaminɛ</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi" data-reveal="up" style="transition-delay:.05s">
+      <div class="testi-stars"><span>★★★★★</span></div>
+      <blockquote>"Tried the new Golden Foam Coffee today — it was suggested by Josh and honestly it's one of the most interesting drinks on the menu. It's espresso-based but the flavor is surprisingly smooth and dessert-like. The foam gives it a creamy texture and the taste actually reminds me of tiramisu pudding — rich, slightly sweet, and very balanced with the espresso. Definitely worth trying!"</blockquote>
+      <div class="testi-foot">
+        <div class="testi-av">☕</div>
+        <div>
+          <div class="testi-name">Google Reviewer</div>
+          <div class="testi-role">A month ago</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi" data-reveal="up" style="transition-delay:.15s">
+      <div class="testi-stars"><span>★★★★★</span></div>
+      <blockquote>"It was a great Experience 🤩 The ambience and the place was very neat and clean with greenery 💚 with peace 🕊️ The workers were also very humble and provided good service 🤝 Must visit the place once with friends and family 😄"</blockquote>
+      <div class="testi-foot">
+        <div class="testi-av">🎮</div>
+        <div>
+          <div class="testi-name">AHMED Gaming</div>
+          <div class="testi-role">Google Review</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi" data-reveal="up" style="transition-delay:.25s">
+      <div class="testi-stars"><span>★★★★☆</span></div>
+      <blockquote>"Flamingo Cafe 💖 Located in Sainikpuri. If you are looking for outdoor cafes, this is for you. A complete outdoor cafe with seating capacity of around 30–40 members. The vibe here is good with fresh air and peaceful ambience. Good options for both veg and non veg. Staff here are responsive with great service."</blockquote>
+      <div class="testi-foot">
+        <div class="testi-av">🌿</div>
+        <div>
+          <div class="testi-name">hydfood_n_travel</div>
+          <div class="testi-role">Local Guide · Google Review</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left" data-reveal="left">
+    <span class="section-eyebrow">Find Us</span>
+    <h2 class="section-title title-dark">Come Say Hello</h2>
+    <p>We're nestled in the peaceful green pocket of Sainikpuri, Secunderabad — a completely outdoor café. Walk in, breathe fresh air, and let us take care of the rest.</p>
+
+    <div class="contact-cards">
+      <div class="cc">
+        <div class="cc-icon">📍</div>
+        <div>
+          <strong>Flamingo Cafe Le ɛstaminɛ</strong>
+          <p>P103, Verka Residency, Vayupuri<br>Sainikpuri, Secunderabad<br>Hyderabad, Telangana — 500094, India</p>
+        </div>
+      </div>
+      <div class="cc">
+        <div class="cc-icon">🕐</div>
+        <div>
+          <strong>Open All 7 Days</strong>
+          <p>Sunday to Monday · 9:00 AM – 11:00 PM</p>
+        </div>
+      </div>
+      <div class="cc">
+        <div class="cc-icon">📞</div>
+        <div>
+          <strong>+91 86866 50068</strong>
+          <p>Call us anytime during opening hours</p>
+        </div>
+      </div>
+      <div class="cc">
+        <div class="cc-icon">✉️</div>
+        <div>
+          <strong>Flamingo.cafe.03@gmail.com</strong>
+          <p>We reply within a few hours</p>
+        </div>
+      </div>
+    </div>
+
+    <a class="wa-btn" href="https://wa.me/918686650068?text=Hi%20Flamingo%20Cafe%20Le%20%C9%9Bstamin%C9%9B!%20I'd%20like%20to%20place%20an%20order%20or%20make%20a%20reservation." target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Order via WhatsApp · 8686650068
+    </a>
+
+    <div class="map-wrap">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d951.5234!2d78.5612!3d17.4715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb9d2f5c4a5b3f%3A0xabcdef1234567890!2sFlamingo+Cafe+Le+Estamine!5e0!3m2!1sen!2sin!4v1700000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <a class="map-cta" href="https://maps.app.goo.gl/HT6T69NosRnRLoRZ9" target="_blank">📌 Open in Google Maps →</a>
+  </div>
+
+  <div data-reveal="right">
+    <div class="form-box">
+      <div class="form-title">Send Us a Message</div>
+      <div class="form-sub">Reservations, events, feedback — we'd love to hear from you.</div>
+      <div class="form">
+        <div class="f-row">
+          <div class="f-group">
+            <label>First Name</label>
+            <input type="text" placeholder="Rahul">
+          </div>
+          <div class="f-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Sharma">
+          </div>
+        </div>
+        <div class="f-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="rahul@example.com">
+        </div>
+        <div class="f-group">
+          <label>Phone (optional)</label>
+          <input type="tel" placeholder="+91 98765 43210">
+        </div>
+        <div class="f-group">
+          <label>Subject</label>
+          <select>
+            <option>Table Reservation</option>
+            <option>Private Event / Party</option>
+            <option>General Inquiry</option>
+            <option>Feedback</option>
+            <option>Catering</option>
+          </select>
+        </div>
+        <div class="f-group">
+          <label>Message</label>
+          <textarea placeholder="Tell us how we can help…"></textarea>
+        </div>
+        <button class="submit" onclick="submitForm()">Send Message ✦</button>
+        <div class="success" id="successMsg">🦩 Thank you! We'll be in touch soon. See you at Flamingo Cafe Le ɛstaminɛ!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top-shine"></div>
+  <div class="footer-glow"></div>
+  <div class="footer-body">
+    <div class="footer-grid">
+      <div class="f-brand" data-reveal="up">
+        <span class="f-brand-logo">🦩 Flamingo Cafe</span>
+        <span class="f-brand-sub">Le ɛstaminɛ</span>
+        <p class="f-brand-p">An outdoor haven of flavour and calm in Sainikpuri, Hyderabad. Come as you are — leave as a regular.</p>
+        <span class="f-est">🗓️ Est. 29 December 2021</span>
+      </div>
+
+      <div class="f-col" data-reveal="up" style="transition-delay:.1s">
+        <h5>Navigate</h5>
+        <ul>
+          <li><a href="#hero"><span class="dot"></span>Home</a></li>
+          <li><a href="#about"><span class="dot"></span>Our Story</a></li>
+          <li><a href="#menu"><span class="dot"></span>Menu</a></li>
+          <li><a href="#testimonials"><span class="dot"></span>Reviews</a></li>
+          <li><a href="#contact"><span class="dot"></span>Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="f-col" data-reveal="up" style="transition-delay:.2s">
+        <h5>Opening Hours</h5>
+        <div class="f-hour"><span class="d">Mon – Fri</span><span class="t">9 AM – 11 PM</span></div>
+        <div class="f-hour"><span class="d">Saturday</span><span class="t">9 AM – 11 PM</span></div>
+        <div class="f-hour"><span class="d">Sunday</span><span class="t">9 AM – 11 PM</span></div>
+        <div style="margin-top:.8rem;font-size:.7rem;color:rgba(255,200,213,.3);font-weight:300;letter-spacing:.06em">Open all 7 days · No holidays</div>
+      </div>
+
+      <div class="f-col" data-reveal="up" style="transition-delay:.3s">
+        <h5>Contact</h5>
+        <div class="f-contact-item"><span class="ic">📍</span>P103, Verka Residency, Vayupuri, Sainikpuri, Secunderabad, Hyderabad 500094</div>
+        <div class="f-contact-item"><span class="ic">📞</span><a href="tel:+918686650068">+91 86866 50068</a></div>
+        <div class="f-contact-item"><span class="ic">✉️</span><a href="mailto:Flamingo.cafe.03@gmail.com">Flamingo.cafe.03@gmail.com</a></div>
+        <div class="f-contact-item"><span class="ic">📌</span><a href="https://maps.app.goo.gl/HT6T69NosRnRLoRZ9" target="_blank">View on Google Maps</a></div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2024 <span>Flamingo Cafe Le ɛstaminɛ</span> · Est. 29 Dec 2021 · Made with ☕ &amp; love in Hyderabad 🇮🇳</p>
+      <div class="socials">
+        <a class="soc" href="#" title="Instagram"><span>IG</span></a>
+        <a class="soc" href="#" title="Facebook"><span>FB</span></a>
+        <a class="soc" href="https://wa.me/918686650068" target="_blank" title="WhatsApp"><span>WA</span></a>
+        <a class="soc" href="https://maps.app.goo.gl/HT6T69NosRnRLoRZ9" target="_blank" title="Maps"><span>📍</span></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── LOADER ── */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+  }, 2000);
+});
+
+/* ── CUSTOM CURSOR ── */
+const cDot  = document.getElementById('cDot');
+const cRing = document.getElementById('cRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+(function animCursor(){
+  rx += (mx-rx)*.18; ry += (my-ry)*.18;
+  cDot.style.left  = mx+'px'; cDot.style.top  = my+'px';
+  cRing.style.left = rx+'px'; cRing.style.top = ry+'px';
+  requestAnimationFrame(animCursor);
+})();
+
+/* ── NAV SCROLL ── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ── SCROLL REVEAL ── */
+const revEls = document.querySelectorAll('[data-reveal]');
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+revEls.forEach(el => revObs.observe(el));
+
+/* ── MENU FILTER ── */
+function filterMenu(cat, el){
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  let delay = 0;
+  document.querySelectorAll('.menu-item').forEach(item => {
+    const show = cat === 'all' || item.dataset.cat === cat;
+    if(show){
+      item.style.display = 'block';
+      item.style.animationDelay = (delay * 0.06) + 's';
+      item.classList.remove('visible');
+      void item.offsetWidth; // reflow
+      item.classList.add('visible');
+      delay++;
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+/* ── FORM ── */
+function submitForm(){
+  const msg = document.getElementById('successMsg');
+  msg.style.display = 'block';
+  msg.style.animation = 'cardIn .4s ease both';
+  setTimeout(() => { msg.style.display='none'; }, 6000);
+}
+
+/* ── STAGGER MENU CARDS ON LOAD ── */
+document.querySelectorAll('.menu-item.visible').forEach((el, i) => {
+  el.style.animationDelay = (i * 0.07) + 's';
+});
+</script>
+</body>
+</html>
